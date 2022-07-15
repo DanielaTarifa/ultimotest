@@ -1,0 +1,24 @@
+server:
+  port: 8080
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      default-zone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: student-microservice
+          uri: lb://student-microservice
+          predicates:
+            - Path=/students/**
+        - id: subject-microservice
+          uri: lb://subject-microservice
+          predicates:
+            - Path=/subject/**
